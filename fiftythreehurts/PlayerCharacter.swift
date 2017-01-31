@@ -25,24 +25,16 @@ class PlayerCharacter : SKNode {
         super.init()
         
         physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
-        physicsBody?.categoryBitMask = Masks.playerCategory
-        physicsBody?.contactTestBitMask = Masks.obstacleCategory
-        physicsBody?.collisionBitMask = Masks.none
+        physicsBody?.categoryBitMask = PhysicsCategory.player
+        physicsBody?.contactTestBitMask = PhysicsCategory.obstacle
+        physicsBody?.collisionBitMask = PhysicsCategory.none
         physicsBody?.isDynamic = true
         
         addChild(sprite)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        sprite = SKSpriteNode(imageNamed: "Square")
-        sprite.color = SKColor.red
-        sprite.colorBlendFactor = 1.0
-        
-        movementDirection = .none
-        
-        super.init(coder: aDecoder)
-        
-        addChild(sprite)
+        fatalError("PlayerCharacter doesn't support NSCoder.")
     }
     
     func setIntendedMovementDirection(direction dir: Direction) {
