@@ -6,8 +6,9 @@
 //  Copyright © 2017 JakTiano. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
+import GameplayKit
+import UnityKit
 
 class MainScene : GameScene {
     
@@ -22,24 +23,32 @@ class MainScene : GameScene {
         addEntity(player)
         
         // create floor
-        let floor = SKSpriteNode(imageNamed: "Square")
-        let floorSize = CGSize(width: size.width, height: 100)
-        floor.name = "flooor :)"
-        floor.size = floorSize
-        floor.color = .darkGray
-        floor.colorBlendFactor = 1.0
-        floor.position = CGPoint(x: floorSize.width / 2.0, y: floorSize.height / 2.0)
-        floor.physicsBody = SKPhysicsBody(rectangleOf: floorSize)
-        floor.physicsBody?.isDynamic = false
-        floor.physicsBody?.categoryBitMask = PhysicsCategory.obstacle
-        floor.physicsBody?.contactTestBitMask = PhysicsCategory.none
-        floor.physicsBody?.collisionBitMask = PhysicsCategory.none
+        let floor = Ground(windowSize: size)
         addChild(floor)
     }
+    
+    var movementDir: Direction = .none
     
     override func update(_ currentTime: TimeInterval) {
         
         super.update(currentTime)
+        
+        // get touch info
+        if let cur = currentTouch, let orig = touchOrigin {
+            if cur.x == orig.x {
+                movementDir = .none
+            } else if cur.x > orig.x {
+                movementDir = .right
+            } else {
+                movementDir = .left
+            }
+            
+            if CGPoint.distance(from: cur, to: orig) > 25 {
+                let delta = cur - orig
+                let movement = delta * 0.8
+                touchOrigin! = orig + movement
+            }
+        }
         
         player.component(ofType: PlayerMovementComponent.self)?.setIntendedMovementDirection(direction: movementDir)
     }

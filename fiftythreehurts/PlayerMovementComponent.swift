@@ -6,8 +6,7 @@
 //  Copyright © 2017 JakTiano. All rights reserved.
 //
 
-import Foundation
-import GameplayKit
+import UnityKit
 
 class PlayerMovementComponent : GameComponent {
     

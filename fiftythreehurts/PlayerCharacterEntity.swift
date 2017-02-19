@@ -6,8 +6,8 @@
 //  Copyright © 2017 JakTiano. All rights reserved.
 //
 
-import Foundation
-import GameplayKit
+import SpriteKit
+import UnityKit
 
 class PlayerCharacterEntity : GameEntity {
     
